@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.java.dao.UserMapper">
+
+    <select id="loginResult" resultType="user">
+        select * from  sys_user where sname=#{name} and spwd=#{psw}
+    </select>
+
+    <select id="showCart" resultType="map">
+
+        SELECT sys_cart.spid,amount,spname,spprice,spdesc FROM sys_cart,sys_shopping
+        WHERE sys_cart.`spid` = sys_shopping.`spid` and sys_cart.sid=#{sid}
+
+    </select>
+
+    <select id="getCountBySidSpid" resultType="int">
+
+        select count(*) from sys_cart where sid=#{sid} and spid=#{spid}
+
+    </select>
+
+    <insert id="addCart">
+
+        insert into sys_cart values (null,#{spid},1,#{sid})
+
+    </insert>
+
+    <update id="updateAmount">
+
+        update sys_cart set amount=amount+1 where sid=#{sid} and spid=#{spid}
+
+    </update>
+
+    <delete id="delSp">
+
+        delete  from sys_cart where sid=#{sid} and spid=#{spid}
+
+    </delete>
+
+    <delete id="delAllSp">
+
+        delete  from sys_cart where sid=#{sid}
+
+    </delete>
+
+</mapper>
